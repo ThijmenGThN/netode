@@ -9,7 +9,12 @@ require("@electron/remote/main").initialize()
 function createWindow() {
     const win = new BrowserWindow({
         width: 800,
+        minWidth: 800,
         height: 400,
+        minHeight: 400,
+
+        autoHideMenuBar: true,
+        icon: __dirname + "./favicon.ico",
 
         webPreferences: {
             enableRemoteModules: true,
