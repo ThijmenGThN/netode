@@ -1,5 +1,5 @@
 // -> Imports
-const { app, BrowserWindow } = require("electron")
+const { app, BrowserWindow, ipcMain } = require("electron")
 const isDev = require("electron-is-dev")
 const path = require("path")
 
@@ -13,11 +13,13 @@ function createWindow() {
         height: 400,
         minHeight: 400,
 
-        autoHideMenuBar: true,
-        icon: __dirname + "./favicon.ico",
+        show: false,
+        frame: false,
+        icon: __dirname + "./../assets/favicon.ico",
 
         webPreferences: {
-            enableRemoteModules: true,
+            nodeIntegration: true,
+            contextIsolation: false,
         },
     })
 
@@ -26,6 +28,8 @@ function createWindow() {
             ? "http://localhost:3000"
             : `file://${path.join(__dirname, "../build/index.html")}`
     )
+
+    win.webContents.on("did-finish-load", () => win.show())
 }
 
 // -> Listeners
@@ -37,4 +41,9 @@ app.on("window-all-closed", () => {
 
 app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow
+})
+
+// -> IPC
+ipcMain.on("ping-out", (event, arg) => {
+    event.reply("ping-in", arg)
 })

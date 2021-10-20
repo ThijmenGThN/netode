@@ -1,0 +1,9 @@
+body {
+    background-color: #434c5e;
+}
+
+.titleBar {
+    background-color: #2e3440;
+
+    -webkit-app-region: drag;
+}
