@@ -1,0 +1,8 @@
+@font-face {
+    font-family: main;
+    src: url(main.otf);
+}
+
+* {
+    font-family: main;
+}

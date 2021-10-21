@@ -8,13 +8,13 @@ require("@electron/remote/main").initialize()
 // -> Application
 function createWindow() {
     const win = new BrowserWindow({
-        width: 800,
-        minWidth: 800,
+        width: 250,
         height: 400,
-        minHeight: 400,
 
         show: false,
         frame: false,
+        resizable: false,
+        transparent: true,
         icon: __dirname + "./../assets/favicon.ico",
 
         webPreferences: {

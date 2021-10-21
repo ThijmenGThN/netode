@@ -1,4 +1,4 @@
-# Netode
+# netode
 
 ## Development 🔨
 
