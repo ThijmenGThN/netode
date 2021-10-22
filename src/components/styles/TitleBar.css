@@ -1,38 +1,41 @@
 .TitleBar {
-    -webkit-app-region: drag;
+  -webkit-app-region: drag;
 
-    position: relative;
+  position: relative;
 
-    padding-left: 5px;
-    padding-right: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
 
-    width: calc(100% - 10px);
-    height: 25px;
+  width: calc(100% - 10px);
+  height: 25px;
 
-    line-height: 25px;
+  line-height: 25px;
 
-    background-color: #232931;
+  background-color: #232931bf;
+}
+
+.TitleBar-Title {
+  padding-left: 2.5px;
 }
 
 .TitleBar-Controls {
-    position: absolute;
-    top: 0;
-    right: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
 
-    min-width: 30px;
-    height: 100%;
+  min-width: 30px;
+  height: 100%;
 }
 
 .TitleBar-Controls button {
-    margin-left: 2.5px;
-    margin-right: 5px;
+  margin-right: 6px;
 
-    width: 22.5px;
-    height: 50%;
+  width: 14.5px;
+  height: 10.6px;
 
-    border-radius: 5px;
+  border-radius: 5px;
 }
 
 .TitleBar-Controls * {
-    -webkit-app-region: none;
+  -webkit-app-region: none;
 }
