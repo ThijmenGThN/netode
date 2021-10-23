@@ -19,7 +19,7 @@ function createWindow() {
         show: false,
         frame: false,
         transparent: true,
-        icon: __dirname + "./../assets/favicon.ico",
+        icon: __dirname + "./../src/assets/favicon.ico",
 
         webPreferences: {
             nodeIntegration: true,
@@ -47,6 +47,9 @@ function createWindow() {
     // -> IPC
     ipcMain.on("exit", () => app.exit(0))
     ipcMain.on("minimize", () => win.minimize())
+    ipcMain.on("toMain-Version", (event) =>
+        event.reply("fromMain-Version", app.getVersion())
+    )
 }
 
 // -> Listeners

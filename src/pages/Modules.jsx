@@ -1,11 +1,10 @@
 import React from "react"
 
-import "./styles/Global.css"
 import "./styles/Modules.css"
 
 export default () => {
     return (
-        <div className="Page-Global Modules">
+        <div className="Modules">
             <p>Modules</p>
         </div>
     )

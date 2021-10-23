@@ -3,7 +3,7 @@
 ## Development 🔨
 
 ```
-npm run electron:serve
+npm run electron:dev
 ```
 
 ## Production 🚀

@@ -6,6 +6,7 @@
     margin: 0;
     padding: 0;
 
+    font-size: 12px;
     color: #eeeeee;
 }
 
@@ -40,6 +41,42 @@ button:hover {
     background-size: 400% 400%;
 }
 
+#Page {
+    animation: gradient 30s linear infinite;
+
+    padding: 7.5px;
+    margin-top: -15px;
+
+    width: calc(100% - 15px);
+    height: calc(100% - 15px);
+
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 8px;
+
+    background: #eeeeee4b;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+
+    background-color: #eeeeee83;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #eeeeeebd;
+}
+
 @keyframes gradient {
     0% {
         background-position: 0% 0%;
@@ -56,20 +93,4 @@ button:hover {
     100% {
         background-position: 0% 0%;
     }
-}
-
-#Page {
-    animation: gradient 30s linear infinite;
-
-    padding: 7.5px;
-    margin-top: -15px;
-
-    width: calc(100% - 15px);
-    height: calc(100% - 15px);
-
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
-
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-    background-size: 400% 400%;
 }

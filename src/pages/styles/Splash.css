@@ -1,0 +1,59 @@
+.Splash-Changelog {
+    overflow: hidden;
+
+    height: 150px;
+
+    border-radius: 16px;
+
+    background-color: #1a1f2580;
+}
+
+.Splash-Changelog span {
+    float: left;
+
+    padding: 5px;
+    padding-left: 10px;
+}
+
+.Splash-Changelog div {
+    padding: 4px;
+    position: relative;
+    top: 22.5px;
+
+    height: calc(100% - 31px);
+    width: calc(100% - 8px);
+
+    border-radius: 16px;
+
+    text-align: left;
+
+    background-color: #1a1f2580;
+}
+
+#Version {
+    float: right;
+
+    padding-right: 12.5px;
+}
+
+#Changelog {
+    overflow-y: scroll;
+
+    margin: 4px;
+    position: absolute;
+
+    width: calc(100% - 16px);
+    height: calc(100% - 16px);
+}
+
+.Splash-Update {
+    overflow: hidden;
+    margin-top: 8px;
+    padding: 8px;
+
+    height: calc(150px - 20px);
+
+    border-radius: 16px;
+
+    background-color: #1a1f2580;
+}
