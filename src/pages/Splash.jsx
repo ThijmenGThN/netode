@@ -45,14 +45,7 @@ export default () => {
                 </div>
             </div>
 
-            <div className="Splash-Update">
-                <label id="Splash-Update-Label">Updater</label>
-                <progress
-                    id="Splash-Update-State"
-                    max="100"
-                    value="20"
-                ></progress>
-            </div>
+            <div className="Splash-Update">// updator</div>
         </div>
     )
 }

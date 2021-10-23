@@ -1,11 +1,10 @@
 {
     "name": "netode",
-    "version": "1.1.0",
+    "version": "1.0.0",
     "description": "Netode.ThijmenHeuvelink.nl @ 2021 - https://github.com/ThijmenGThN/Netode",
     "author": "mail@thijmenheuvelink.nl",
     "dependencies": {
         "@electron/remote": "^2.0.1",
-        "uaup-js": "^0.0.22",
         "electron-is-dev": "^2.0.0"
     },
     "devDependencies": {

@@ -6,28 +6,5 @@
     </head>
     <body>
         <div id="Root"></div>
-
-        <script>
-            require("uaup-js").Update({
-                gitRepo: "netode",
-                gitUsername: "ThijmenGThN",
-
-                appName: "netode",
-                appExecutableName: "netode.exe",
-
-                label: document.querySelector("#Splash-Update-Label"),
-                progressBar: document.querySelector("#Splash-Update-State"),
-                forceUpdate: false,
-                stageTitles: {
-                    Checking: "Checking For Updates!",
-                    Found: "Update Found!",
-                    NotFound: "No Update Found.",
-                    Downloading: "Downloading...",
-                    Unzipping: "Installing...",
-                    Cleaning: "Finalizing...",
-                    Launch: "Launching...",
-                },
-            })
-        </script>
     </body>
 </html>
