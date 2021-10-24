@@ -1,10 +1,13 @@
 {
     "name": "netode",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Netode.ThijmenHeuvelink.nl @ 2021 - https://github.com/ThijmenGThN/Netode",
     "author": "mail@thijmenheuvelink.nl",
     "dependencies": {
         "@electron/remote": "^2.0.1",
+        "app-root-path": "^3.0.0",
+        "axios": "^0.23.0",
+        "electron-dl": "^3.2.1",
         "electron-is-dev": "^2.0.0"
     },
     "devDependencies": {
@@ -19,11 +22,11 @@
         "react-scripts": "^3.4.4",
         "wait-on": "^6.0.0"
     },
-    "main": "public/main.js",
+    "main": "public/electron.js",
     "homepage": "./",
     "scripts": {
         "dev": "concurrently -k \"cross-env BROWSER=none react-scripts start\" \"wait-on tcp:3000 && electron .\"",
-        "build": "react-scripts build && electron-builder -c.extraMetadata.main=build/main.js"
+        "build": "npm i && react-scripts build && electron-builder -c.extraMetadata.main=build/electron.js"
     },
     "build": {
         "extends": null,
@@ -38,7 +41,7 @@
             "buildResources": "assets"
         },
         "win": {
-            "icon": "/src/assets/favicon.ico"
+            "icon": "/public/favicon.ico"
         }
     },
     "eslintConfig": {

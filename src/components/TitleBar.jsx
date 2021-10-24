@@ -2,8 +2,6 @@ import React from "react"
 
 import "./styles/TitleBar.css"
 
-import Favicon from "../assets/favicon.ico"
-
 const { ipcRenderer } = window.require("electron")
 
 const exit = () => ipcRenderer.send("exit")
@@ -12,7 +10,6 @@ const minimize = () => ipcRenderer.send("minimize")
 export default () => {
     return (
         <div className="TitleBar">
-            <img src={Favicon} alt="netode" id="Favicon" />
             <p className="TitleBar-Title">netode</p>
 
             <div className="TitleBar-Controls">
