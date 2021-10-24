@@ -20,8 +20,6 @@ export default () => {
         )
 
         ipcRenderer.on("fromMain-FetchUpdate", (event, data) => {
-            console.log(data)
-
             $("#Update-Notice").innerHTML = data.notice
 
             if (data.failed) {

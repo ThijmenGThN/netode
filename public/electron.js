@@ -65,6 +65,7 @@ function createWindow() {
                 .then(({ data }) => {
                     if (isDev)
                         data = {
+                            name: "🐛 Development Title",
                             html_url:
                                 "https://github.com/ThijmenGThN/netode/releases/tag/1.1.1",
                             tag_name: "1.1.1",
@@ -76,13 +77,14 @@ function createWindow() {
                                         "https://github.com/ThijmenGThN/netode/releases/download/1.1.1/netode-1.1.1.exe",
                                 },
                             ],
-                            body: "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+                            body: "New Features will be displayed here and below.",
                         }
 
                     lastUpdateChecked = Date.now()
 
                     try {
                         if (
+                            !data.name ||
                             data.assets[0].name != `netode-${data.tag_name}.exe`
                         ) {
                             update = {
@@ -95,6 +97,7 @@ function createWindow() {
 
                         if (data.body)
                             data.body = data.body.replace(/\n/g, "<br />")
+                        data.body = data.name + "<br /><br />" + data.body
 
                         if (data.draft) {
                             update = {
