@@ -3,16 +3,13 @@ const { app, BrowserWindow, ipcMain } = require("electron")
 const { download } = require("electron-dl")
 const { spawn } = require("child_process")
 const isDev = require("electron-is-dev")
-const root = require("app-root-path")
 const { rmSync, existsSync } = require("fs")
 const axios = require("axios")
 const path = require("path")
 
 require("@electron/remote/main").initialize()
-if (existsSync(root + "/dist/update"))
-    rmSync(root + "/dist/update", { recursive: true })
-
-const developer = false
+if (existsSync(app.getPath("userData") + "/dist/update"))
+    rmSync(app.getPath("userData") + "/dist/update", { recursive: true })
 
 // -> Application
 function createWindow() {
@@ -61,27 +58,28 @@ function createWindow() {
         if (Math.floor((Date.now() - lastUpdateChecked) / 1000) > 60)
             axios
                 .get(
-                    !developer
-                        ? "https://api.github.com/repos/ThijmenGThN/netode/releases/latest"
-                        : "https://google.com/"
+                    isDev
+                        ? "https://google.com/"
+                        : "https://api.github.com/repos/ThijmenGThN/netode/releases/latest"
                 )
                 .then(({ data }) => {
-                    if (developer)
+                    if (isDev)
                         data = {
                             html_url:
-                                "https://github.com/ThijmenGThN/netode/releases/tag/1.1.0",
-                            tag_name: "1.1.0",
+                                "https://github.com/ThijmenGThN/netode/releases/tag/1.1.1",
+                            tag_name: "1.1.1",
                             assets: [
                                 {
-                                    url: "https://api.github.com/repos/ThijmenGThN/netode/releases/assets/47718534",
-                                    name: "netode-1.1.0.exe",
+                                    url: "https://api.github.com/repos/ThijmenGThN/netode/releases/assets/1.1.1",
+                                    name: "netode-1.1.1.exe",
                                     browser_download_url:
-                                        "https://github.com/ThijmenGThN/netode/releases/download/1.1.0/netode-1.1.0.exe",
+                                        "https://github.com/ThijmenGThN/netode/releases/download/1.1.1/netode-1.1.1.exe",
                                 },
                             ],
-                            body: "Test Description",
+                            body: "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
                         }
-                    else lastUpdateChecked = Date.now()
+
+                    lastUpdateChecked = Date.now()
 
                     try {
                         if (
@@ -90,13 +88,20 @@ function createWindow() {
                             update = {
                                 failed: true,
                                 notice: "unable to fetch update details right now.",
+                                changelog: update?.changelog,
                             }
                             return event.reply("fromMain-FetchUpdate", update)
                         }
 
+                        if (data.body)
+                            data.body = data.body.replace(/\n/g, "<br />")
+
                         if (data.draft) {
                             update = {
                                 failed: true,
+                                changelog: data.body,
+                                origin: data.html_url,
+                                version: data.tag_name,
                                 notice: "updating is currently halted, <a target='_blank' href='https://google.com/'>view status</a>.",
                             }
                             return event.reply("fromMain-FetchUpdate", update)
@@ -105,6 +110,10 @@ function createWindow() {
                         if (data.tag_name == app.getVersion()) {
                             update = {
                                 failed: true,
+                                download: data.assets[0].browser_download_url,
+                                changelog: data.body,
+                                origin: data.html_url,
+                                version: data.tag_name,
                                 notice: "seems like you're up-to date, wonderful.",
                             }
                             return event.reply("fromMain-FetchUpdate", update)
@@ -123,6 +132,7 @@ function createWindow() {
                         update = {
                             failed: true,
                             notice: "unable to fetch update details right now.",
+                            changelog: update?.changelog,
                         }
                         event.reply("fromMain-FetchUpdate", update)
                     }
@@ -130,9 +140,10 @@ function createWindow() {
         else {
             update = {
                 failed: true,
-                notice: `rate limited, let's retry that in ${
+                notice: `seeking updates will be available in ${
                     60 - Math.floor((Date.now() - lastUpdateChecked) / 1000)
                 }s.`,
+                changelog: update?.changelog,
             }
             event.reply("fromMain-FetchUpdate", update)
         }
@@ -145,8 +156,6 @@ function createWindow() {
     ipcMain.on("toMain-Splash", (event) => {
         event.reply("fromMain-Version", app.getVersion())
         setTimeout(() => fetchUpdate(event), 2500)
-
-        if (developer) event.reply("alert", "DEVELOPER")
     })
 
     let isBusy
@@ -171,12 +180,14 @@ function createWindow() {
                 percent: 0,
             })
 
-            if (existsSync(root + "/dist/update"))
-                rmSync(root + "/dist/update", { recursive: true })
+            if (existsSync(app.getPath("userData") + "/dist/update"))
+                rmSync(app.getPath("userData") + "/dist/update", {
+                    recursive: true,
+                })
 
             setTimeout(() => {
                 download(win, update.download, {
-                    directory: root + "/dist/update",
+                    directory: app.getPath("userData") + "/dist/update",
                     filename: "setup.exe",
                     onProgress: ({ percent }) => {
                         event.reply("fromMain-Update", {
@@ -195,7 +206,11 @@ function createWindow() {
                         spawn(
                             "cmd.exe",
                             [
-                                `/C taskkill /F /PID ${process.pid} & start ${root}/dist/update/setup.exe`,
+                                `/C taskkill /F /PID ${
+                                    process.pid
+                                } & start ${app.getPath(
+                                    "userData"
+                                )}/dist/update/setup.exe`,
                             ],
                             { detached: true }
                         )
