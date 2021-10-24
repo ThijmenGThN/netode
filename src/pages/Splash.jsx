@@ -20,6 +20,8 @@ export default () => {
         )
 
         ipcRenderer.on("fromMain-FetchUpdate", (event, data) => {
+            console.log(data)
+
             $("#Update-Notice").innerHTML = data.notice
 
             if (data.failed) {
@@ -28,6 +30,9 @@ export default () => {
             } else {
                 setUpdate(`INSTALL ${data.version}`)
                 $("#Update-Button").style.display = "block"
+            }
+
+            if (data.changelog) {
                 $("#Changelog").innerHTML = data.changelog
             }
         })

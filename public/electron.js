@@ -12,7 +12,7 @@ require("@electron/remote/main").initialize()
 if (existsSync(root + "/dist/update"))
     rmSync(root + "/dist/update", { recursive: true })
 
-const developer = true
+const developer = false
 
 // -> Application
 function createWindow() {
@@ -54,73 +54,88 @@ function createWindow() {
     } else app.quit()
 
     // -> Updater
-    let update = {}
+    let update = {},
+        lastUpdateChecked = 1
     const fetchUpdate = (event) => {
-        axios
-            .get(
-                !developer
-                    ? "https://api.github.com/repos/ThijmenGThN/netode/releases/latest"
-                    : "https://google.com/"
-            )
-            .then(({ data }) => {
-                if (developer)
-                    data = {
-                        html_url:
-                            "https://github.com/ThijmenGThN/netode/releases/tag/1.1.0",
-                        tag_name: "1.1.0",
-                        assets: [
-                            {
-                                url: "https://api.github.com/repos/ThijmenGThN/netode/releases/assets/47718534",
-                                name: "netode-1.1.0.exe",
-                                browser_download_url:
-                                    "https://github.com/ThijmenGThN/netode/releases/download/1.1.0/netode-1.1.0.exe",
-                            },
-                        ],
-                        body: "Test Description",
-                    }
+        // rate limiter
+        if (Math.floor((Date.now() - lastUpdateChecked) / 1000) > 60)
+            axios
+                .get(
+                    !developer
+                        ? "https://api.github.com/repos/ThijmenGThN/netode/releases/latest"
+                        : "https://google.com/"
+                )
+                .then(({ data }) => {
+                    if (developer)
+                        data = {
+                            html_url:
+                                "https://github.com/ThijmenGThN/netode/releases/tag/1.1.0",
+                            tag_name: "1.1.0",
+                            assets: [
+                                {
+                                    url: "https://api.github.com/repos/ThijmenGThN/netode/releases/assets/47718534",
+                                    name: "netode-1.1.0.exe",
+                                    browser_download_url:
+                                        "https://github.com/ThijmenGThN/netode/releases/download/1.1.0/netode-1.1.0.exe",
+                                },
+                            ],
+                            body: "Test Description",
+                        }
+                    else lastUpdateChecked = Date.now()
 
-                try {
-                    if (data.assets[0].name != `netode-${data.tag_name}.exe`) {
+                    try {
+                        if (
+                            data.assets[0].name != `netode-${data.tag_name}.exe`
+                        ) {
+                            update = {
+                                failed: true,
+                                notice: "unable to fetch update details right now.",
+                            }
+                            return event.reply("fromMain-FetchUpdate", update)
+                        }
+
+                        if (data.draft) {
+                            update = {
+                                failed: true,
+                                notice: "updating is currently halted, <a target='_blank' href='https://google.com/'>view status</a>.",
+                            }
+                            return event.reply("fromMain-FetchUpdate", update)
+                        }
+
+                        if (data.tag_name == app.getVersion()) {
+                            update = {
+                                failed: true,
+                                notice: "seems like you're up-to date, wonderful.",
+                            }
+                            return event.reply("fromMain-FetchUpdate", update)
+                        }
+
+                        update = {
+                            failed: false,
+                            notice: "an update is available, let's install it.",
+                            download: data.assets[0].browser_download_url,
+                            changelog: data.body,
+                            origin: data.html_url,
+                            version: data.tag_name,
+                        }
+                        event.reply("fromMain-FetchUpdate", update)
+                    } catch (err) {
                         update = {
                             failed: true,
                             notice: "unable to fetch update details right now.",
                         }
-                        return event.reply("fromMain-FetchUpdate", update)
+                        event.reply("fromMain-FetchUpdate", update)
                     }
-
-                    if (data.draft) {
-                        update = {
-                            failed: true,
-                            notice: "updating is currently halted, <a target='_blank' href='https://google.com/'>view status</a>.",
-                        }
-                        return event.reply("fromMain-FetchUpdate", update)
-                    }
-
-                    if (data.tag_name == app.getVersion()) {
-                        update = {
-                            failed: true,
-                            notice: "seems like you're up-to date, wonderful.",
-                        }
-                        return event.reply("fromMain-FetchUpdate", update)
-                    }
-
-                    update = {
-                        failed: false,
-                        notice: "an update is available, let's install it.",
-                        download: data.assets[0].browser_download_url,
-                        changelog: data.body,
-                        origin: data.html_url,
-                        version: data.tag_name,
-                    }
-                    event.reply("fromMain-FetchUpdate", update)
-                } catch (err) {
-                    update = {
-                        failed: true,
-                        notice: "unable to fetch update details right now.",
-                    }
-                    event.reply("fromMain-FetchUpdate", update)
-                }
-            })
+                })
+        else {
+            update = {
+                failed: true,
+                notice: `rate limited, let's retry that in ${
+                    60 - Math.floor((Date.now() - lastUpdateChecked) / 1000)
+                }s.`,
+            }
+            event.reply("fromMain-FetchUpdate", update)
+        }
     }
 
     // -> IPC
@@ -130,6 +145,8 @@ function createWindow() {
     ipcMain.on("toMain-Splash", (event) => {
         event.reply("fromMain-Version", app.getVersion())
         setTimeout(() => fetchUpdate(event), 2500)
+
+        if (developer) event.reply("alert", "DEVELOPER")
     })
 
     let isBusy
