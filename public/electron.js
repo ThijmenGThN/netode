@@ -139,7 +139,7 @@ function createWindow() {
 
   ipcMain.on("toMain-Splash", (event) => {
     event.reply("fromMain-Version", app.getVersion());
-    setTimeout(() => fetchUpdate(event), 2500);
+    fetchUpdate(event);
   });
 
   let isBusy;
