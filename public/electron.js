@@ -15,15 +15,11 @@ if (existsSync(app.getPath("userData") + "/dist/update"))
 function createWindow() {
   const win = new BrowserWindow({
     width: 250,
-    minWidth: 250,
-    maxWidth: 250,
-
     height: 400,
-    minHeight: 400,
-    maxHeight: 400,
 
     show: false,
     frame: false,
+    resizable: false,
     transparent: true,
     icon: __dirname + "./favicon.ico",
 
@@ -97,17 +93,6 @@ function createWindow() {
 
             if (data.body) data.body = data.body.replace(/\n/g, "<br />");
             data.body = data.name + "<br /><br />" + data.body;
-
-            if (data.draft) {
-              update = {
-                failed: true,
-                changelog: data.body,
-                origin: data.html_url,
-                version: data.tag_name,
-                notice: `an update marked as draft is almost ready.`,
-              };
-              return event.reply("fromMain-FetchUpdate", update);
-            }
 
             if (data.tag_name == app.getVersion()) {
               update = {
