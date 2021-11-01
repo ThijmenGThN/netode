@@ -25,6 +25,10 @@ button:hover {
   filter: brightness(125%);
 }
 
+h1 {
+  font-weight: normal;
+}
+
 #Root {
   animation: gradient 30s linear infinite;
 

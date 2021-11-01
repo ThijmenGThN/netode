@@ -22,9 +22,9 @@
  - $ npm i
 
 2. Development
- - $ npm run electron:dev
+ - $ npm run dev
 
 3. Deployment
  - > Edit: package.json -> version
- - $ npm run electron:build
+ - $ npm run build
 ```
