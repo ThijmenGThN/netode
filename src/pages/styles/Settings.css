@@ -1,0 +1,71 @@
+.Settings {
+  overflow: hidden;
+
+  height: calc(100% - 70px);
+
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+
+  background-color: #1a1f2580;
+}
+
+.Settings-Header {
+  padding: 6px;
+  padding-bottom: 4px;
+
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+
+  text-align: center;
+}
+
+.Settings-Items {
+  overflow: hidden;
+  margin: 5px;
+  margin-top: 0;
+
+  border-radius: 8px;
+
+  background-color: #1a1f254b;
+}
+
+.Settings-Items div {
+  padding-left: 10px;
+  padding-right: 10px;
+
+  width: calc(100% - 20px);
+  height: 40px;
+
+  line-height: 12.5px;
+}
+
+.Settings-Items div:hover {
+  cursor: pointer;
+
+  background-color: #1a1f254b;
+}
+
+.Settings div h1 {
+  padding-top: 7px;
+
+  width: calc(100% - 20px);
+}
+
+.Settings div p {
+  margin-top: 3px;
+  font-size: 10px;
+
+  width: calc(100% - 20px);
+
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.644);
+}
+
+.Settings-Icon {
+  float: right;
+  margin-top: 11px;
+
+  height: 17.5px;
+}
