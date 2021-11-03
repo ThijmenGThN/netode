@@ -11,6 +11,10 @@
   color: #eeeeee;
 }
 
+body {
+  overflow: hidden;
+}
+
 button {
   transition: 0.05s;
 

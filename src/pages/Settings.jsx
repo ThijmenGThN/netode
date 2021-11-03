@@ -4,10 +4,11 @@ import { FaAngleRight } from "react-icons/fa";
 import "./styles/Settings.css";
 
 import Personalization from "./settings/Personalization";
+import Preferences from "./settings/Preferences";
 
 export default () => {
   const Item = (props) => {
-    const [isVisible, setVisibility] = useState(true);
+    const [isVisible, setVisibility] = useState(false);
 
     return (
       <>
@@ -54,23 +55,9 @@ export default () => {
           </li>
           <li>
             <Item
-              title="Setting 1"
-              description="Placeholder setting .."
-              component={Personalization}
-            />
-          </li>
-          <li>
-            <Item
-              title="Setting 2"
-              description="Placeholder setting .."
-              component={Personalization}
-            />
-          </li>
-          <li>
-            <Item
-              title="Setting 3"
-              description="Placeholder setting .."
-              component={Personalization}
+              title="Preferences"
+              description="Revision how netode behaves .."
+              component={Preferences}
             />
           </li>
         </ul>
