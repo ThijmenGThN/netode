@@ -29,6 +29,33 @@ h1 {
   font-weight: normal;
 }
 
+.checkbox {
+  cursor: pointer;
+  animation: deactivate 4s linear infinite;
+
+  margin: 5px 0 0 0;
+
+  height: 22px;
+  width: 32px;
+
+  border-radius: 5px 0 0 5px;
+}
+
+.checkbox svg {
+  padding: 5px 9px 7.5px 10px;
+}
+
+.checkbox span {
+  animation: deactivate 4s linear infinite;
+  position: absolute;
+  padding: 0 10px 0 9px;
+
+  line-height: 22px;
+
+  border-left: solid 2.5px #1a1f2580;
+  border-radius: 0 5px 5px 0;
+}
+
 #Root {
   animation: gradient 30s linear infinite;
 
@@ -97,5 +124,29 @@ h1 {
   }
   100% {
     background-position: 0% 0%;
+  }
+}
+
+@keyframes activate {
+  0% {
+    background-color: #32d74eb4;
+  }
+  75% {
+    background-color: #32d1d7b4;
+  }
+  100% {
+    background-color: #32d74eb4;
+  }
+}
+
+@keyframes deactivate {
+  0% {
+    background-color: #d73232b4;
+  }
+  75% {
+    background-color: #d732a6b4;
+  }
+  100% {
+    background-color: #d73232b4;
   }
 }
