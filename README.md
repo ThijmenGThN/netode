@@ -14,17 +14,3 @@
   </p>
 </p>
 <br />
-
-## Developers 🔨
-
-```
-1. Dependencies
- - $ npm i
-
-2. Development
- - $ npm run dev
-
-3. Deployment
- - > Edit: package.json -> version
- - $ npm run build
-```
